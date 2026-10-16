@@ -1,0 +1,70 @@
+# Private deployment: no public inbound ports. Cloudflare Tunnel reaches app internally.
+name: abtin
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: abtin_distribution
+      POSTGRES_USER: abtin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [internal]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U abtin -d abtin_distribution"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql+psycopg://abtin:${DB_PASSWORD}@db:5432/abtin_distribution
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+      METRICS_TOKEN: ${METRICS_TOKEN:-}
+      TRUST_PROXY: "1"
+      RATE_LIMIT_PER_MIN: ${RATE_LIMIT_PER_MIN:-600}
+      RATE_LIMIT_LOGIN_PER_MIN: ${RATE_LIMIT_LOGIN_PER_MIN:-30}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      API_DOCS_ENABLED: ${API_DOCS_ENABLED:-0}
+    volumes: [uploads:/srv/app/uploads]
+    networks: [internal, edge]
+    expose: ["8000"]
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?set TUNNEL_TOKEN in .env}
+    depends_on: [app]
+    networks: [edge]
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: abtin
+      PGDATABASE: abtin_distribution
+      PGPASSWORD: ${DB_PASSWORD}
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
+      BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-0}
+    volumes:
+      - ./scripts:/scripts:ro
+      - backups:/backups
+    command: ["sh", "/scripts/backup-loop.sh"]
+    networks: [internal]
+networks:
+  internal:
+    internal: true
+  edge: {}
+volumes:
+  pgdata: {}
+  uploads: {}
+  backups: {}

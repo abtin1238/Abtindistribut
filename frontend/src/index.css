@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{font-family:Vazirmatn,Tahoma,sans-serif}
+@layer components{
+  .inp{@apply w-full rounded border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100}
+  .th{@apply whitespace-nowrap bg-slate-100 p-2 text-start font-semibold dark:bg-slate-800}
+  .td{@apply whitespace-nowrap border-t border-slate-200 p-2 dark:border-slate-700}
+}

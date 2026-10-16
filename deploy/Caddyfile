@@ -1,0 +1,13 @@
+# HTTPS خودکار (Let's Encrypt) برای $DOMAIN؛ همه‌ی ترافیک به app داخلی می‌رود.
+{$DOMAIN} {
+	encode zstd gzip
+	request_body { max_size 25MB }
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	}
+	# /metrics فقط داخل شبکه‌ی داخلی (Prometheus) — از اینترنت بسته است
+	@metrics path /metrics
+	respond @metrics 404
+	reverse_proxy app:8000
+}

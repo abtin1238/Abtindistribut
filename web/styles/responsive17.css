@@ -1,0 +1,44 @@
+/* مرحله ۱۷ — اصلاح ریسپانسیو موبایل، دکمه/فیلد هم‌سبک پروژه، تصاویر هم‌اندازه */
+html,body{max-width:100%;overflow-x:clip}
+#content,.ads>*{min-width:0}
+.cd,.nt-grid>*,.row2>*,.row3>*{min-width:0}
+#content,.ads main,.fd-back,.fd,.fd-grid,.fd-f{min-width:0;max-width:100%}
+.fd-f,.fd-f label{min-width:0}
+.fd-f input,.fd-f select,.fd-f textarea,.fd-grid input,.fd-grid select,.fd-grid textarea{width:100%;max-width:100%;min-width:0}
+.tablewrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:900px){.nt-grid{grid-template-columns:minmax(0,1fr)}}
+img,video{max-width:100%}
+/* لوگو/آواتار: کادر ثابت و برش مرکزی، هر شکلی که آپلود شود */
+.brand img.logo,.hd .brand img.logo{width:44px;height:44px;max-width:44px;max-height:44px;object-fit:cover;border-radius:12px;flex:none;background:var(--soft,transparent)}
+.lgprev{width:96px;height:96px;border-radius:20px;overflow:hidden;flex:none;display:grid;place-items:center;background:var(--soft,transparent);border:1px solid var(--bd)}
+.lgprev img{width:100%;height:100%;object-fit:cover;display:block}
+/* هر تصویر محتوایی (کالا، پیوست) در کادر هم‌نسبت */
+.media-box{aspect-ratio:4/3;overflow:hidden;border-radius:var(--r-sm,12px);background:var(--soft,transparent)}
+.media-box>img{width:100%;height:100%;object-fit:cover;display:block}
+/* دکمه‌ها و فیلدهای جدول/فرم مثل .btn پروژه */
+.dt button,.fd button,.kb-help+.fd-btn button{font:inherit;font-size:13.5px;min-height:40px;padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;color:var(--bl2);background:color-mix(in srgb,var(--bl) 15%,transparent);border:1px solid color-mix(in srgb,var(--bl) 40%,transparent)}
+:root[data-theme=light] .dt button,:root[data-theme=light] .fd button{color:color-mix(in srgb,var(--bl) 78%,#000);background:color-mix(in srgb,var(--bl) 8%,#fff)}
+.dt button.primary,.fd button.primary{background:var(--bl)!important;border-color:var(--bl);color:#fff}
+.fd-btn button,.ac-t button{font:inherit;font-size:13.5px;min-height:40px;padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;color:var(--bl2);background:color-mix(in srgb,var(--bl) 15%,transparent);border:1px solid color-mix(in srgb,var(--bl) 40%,transparent)}
+.fd-btn button.primary{background:var(--bl)!important;border-color:var(--bl);color:#fff}
+.fd-btn button:hover,.ac-t button:hover{background:color-mix(in srgb,var(--bl) 26%,transparent)}
+.dt-sort,.dt-sort:hover{all:unset;cursor:pointer;font-weight:700}
+.dt input[type=search],.dt select,.fd input,.fd select,.fd textarea,.dt-colbox{font:inherit;color:var(--tx);background:var(--ctl-bg,transparent);border:1px solid var(--bd);border-radius:var(--r-sm);padding:10px 12px;min-height:40px}
+.dt-colbox{background:var(--card)}.dt-colbox label{display:flex;gap:8px;align-items:center;margin:0}.dt-colbox input{min-height:0}
+.fd{border:1px solid var(--bd)}
+@media(max-width:700px){
+ .dt-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dt-q{grid-column:1/-1}.dt-cols{grid-column:1/-1}.dt-cols summary{text-align:center}
+ .dt-bar>button{width:100%}
+ .dt-foot{flex-direction:column;align-items:stretch;text-align:center}.dt-pg{justify-content:space-between}
+ .dt table{font-size:13px}.dt th,.dt td{white-space:nowrap}
+ .fd-back{align-items:end;padding:0}.fd{border-radius:var(--r) var(--r) 0 0;max-height:92vh}
+ .fd-btn{position:sticky;bottom:0;background:var(--card);padding-top:10px}.fd-btn button{flex:1}
+ .fd-grid{grid-template-columns:minmax(0,1fr)}.fd-btn{flex-wrap:wrap}.fd-btn button{min-width:0;max-width:100%}
+}
+.fd-f label{display:block;margin:0}
+[data-theme-toggle]{font-size:18px;line-height:1}
+.nt-grid .btn.pri{margin-top:12px}
+@media(max-width:700px){.nt-grid th,.nt-grid td{padding:8px 4px;font-size:12px}.nt-grid th small{display:block}}
+.pre-note{white-space:pre-wrap;word-break:break-word}
+.ac-t{width:100%;border-collapse:collapse;font-size:.85rem}.ac-t th,.ac-t td{padding:.35rem .4rem;text-align:right;border-bottom:1px solid var(--bd,#ddd)}.ac-t button{white-space:nowrap}
+.ac-btn{flex-wrap:wrap;gap:.5rem}

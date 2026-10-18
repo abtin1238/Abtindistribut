@@ -1,0 +1,55 @@
+
+name: Clear GitHub Actions History
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  clear-history:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete completed workflow runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Fetching completed workflow runs..."
+
+          gh api --paginate \
+            "/repos/${REPOSITORY}/actions/runs?per_page=100" \
+            --jq '.workflow_runs[] | select(.status == "completed") | .id' \
+            > /tmp/run_ids.txt
+
+          deleted=0
+          failed=0
+
+          while IFS= read -r run_id; do
+            [ -n "$run_id" ] || continue
+
+            if [ "$run_id" = "$CURRENT_RUN_ID" ]; then
+              continue
+            fi
+
+            if gh api --method DELETE \
+              "/repos/${REPOSITORY}/actions/runs/${run_id}" \
+              >/dev/null 2>&1; then
+              echo "Deleted run: ${run_id}"
+              deleted=$((deleted + 1))
+            else
+              echo "Could not delete run: ${run_id}"
+              failed=$((failed + 1))
+            fi
+          done < /tmp/run_ids.txt
+
+          echo "Deletion finished."
+          echo "Deleted: ${deleted}"
+          echo "Failed: ${failed}"
+          echo "Current run is retained."

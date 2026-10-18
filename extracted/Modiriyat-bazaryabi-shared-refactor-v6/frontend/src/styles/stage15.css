@@ -1,0 +1,27 @@
+/* اعلان‌ها، جستجو و اسناد — فقط توکن‌های تم */
+.nt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:14px}
+@media (max-width:900px){.nt-grid{grid-template-columns:1fr}}
+.nt-item{padding:10px 12px;border-bottom:1px solid var(--bd,currentColor);border-inline-start:3px solid transparent}
+.nt-item p{margin:4px 0;opacity:.85}.nt-item small{opacity:.65}
+.nt-new{border-inline-start-color:var(--bl);font-weight:600}
+.nt-off{opacity:.6}
+.sr-f{display:grid;grid-template-columns:1fr 1fr 1.4fr auto;gap:8px;margin-bottom:8px}
+@media (max-width:700px){.sr-f{grid-template-columns:1fr 1fr}}
+.sr-saved{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sr-chip{display:inline-flex;gap:2px}
+.sr-hit{display:flex;justify-content:space-between;width:100%;text-align:start;background:none;border:0;cursor:pointer;color:inherit;font:inherit}
+.sr-hit small{opacity:.65}
+.sr-th{background:none;border:0;padding:0;font-weight:700}
+.fi-hash{font-family:monospace;opacity:.7}
+.fi-modal{max-width:720px;width:100%}
+.fi-up{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.fi-act{display:flex;gap:6px;flex-wrap:wrap}
+
+/* مرحله ۱۶/۱۷: صفحه‌ی یکپارچه‌سازی */
+.ig-form{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:8px 0 16px}
+.ig-form label{display:flex;flex-direction:column;gap:4px;font-size:13px;min-width:180px;flex:1 1 200px}
+.ig-form fieldset{flex:1 1 100%;border:1px solid var(--bd);border-radius:10px;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.ig-chk{flex-direction:row!important;align-items:center;min-width:0!important;flex:0 0 auto!important}
+.ig-secret code{display:block;margin:8px 0;padding:10px;border-radius:8px;background:color-mix(in srgb,var(--mut) 14%,transparent);overflow-wrap:anywhere;user-select:all}
+.ig-hook{margin:10px 0}.ig-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.empty.err{color:var(--bad)}

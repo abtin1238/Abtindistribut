@@ -1,0 +1,129 @@
+/* لایهٔ پرداخت طراحی پنل وب (آخرین لایه در index.css).
+   همهٔ قواعد زیر `.ads` هستند تا اپ‌های موبایل که index.css را به اشتراک می‌گذارند تغییر نکنند.
+   فقط از توکن‌ها استفاده می‌شود؛ هیچ رنگ literal جدیدی اضافه نشده است. */
+
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-io:cubic-bezier(.77,0,.175,1)}
+
+/* ---------- پایه: متن، عدد، لمس ---------- */
+.ads{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent}
+.ads :is(button,a,select,summary,label){touch-action:manipulation}
+.ads :is(h1,h2,h3){text-wrap:balance}
+.ads #content{min-width:0}
+.ads #content>h1{font-size:24px;line-height:1.4;margin:6px 0 18px}
+.ads :is(.nv,.btn,.qa button,.bell,.prof,.qc):focus-visible,.ads a:focus-visible{outline:2px solid var(--bl);outline-offset:2px;border-radius:var(--r-sm)}
+
+/* ---------- سایدبار: جداسازی بخش‌های فرعی، حالت‌های تعاملی ---------- */
+.ads .sb{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.ads .sb::-webkit-scrollbar{display:none}
+.ads .sb nav{gap:2px}
+.ads .nv{position:relative;min-height:42px;font:inherit;font-size:14px;transition:background-color .18s var(--ease-out),color .18s var(--ease-out),transform .16s var(--ease-out)}
+.ads .nv:active{transform:scale(.98)}
+.ads .nv.mn{font-size:13px;opacity:1;min-height:34px;padding:6px 14px}
+.ads .nv:not(.mn)+.nv.mn{margin-top:12px}
+.ads .nv:not(.mn)+.nv.mn::before{content:"";position:absolute;inset-inline:14px;top:-7px;height:1px;background:var(--bd)}
+.ads .nv.on{box-shadow:0 8px 18px -8px color-mix(in srgb,var(--bl) 55%,transparent);font-weight:600}
+.ads .nv.on .ic{filter:none}
+@media(hover:hover){
+  .ads .nv:not(.on):hover{background:color-mix(in srgb,var(--tx) 6%,transparent);color:var(--tx)}
+  .ads .qa button:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--bl) 55%,var(--bd))}
+  .ads .tablewrap tr:hover td{background:color-mix(in srgb,var(--tx) 4%,transparent)}
+  .ads .bell:hover,.ads .prof:hover .av{border-color:color-mix(in srgb,var(--bl) 55%,var(--bd))}
+  .ads .btn:not(:disabled):hover{background:color-mix(in srgb,var(--bl) 26%,transparent);border-color:color-mix(in srgb,var(--bl) 65%,transparent)}
+}
+.ads .qa button,.ads .btn,.ads .bell{transition:transform .16s var(--ease-out),border-color .18s var(--ease-out),background-color .18s var(--ease-out)}
+.ads .qa button:active,.ads .btn:not(:disabled):active,.ads .bell:active{transform:scale(.97)}
+.ads .btn{font:inherit;font-size:13.5px;min-height:40px}
+.ads .onl{background:color-mix(in srgb,var(--ok) 6%,transparent)}
+
+/* ---------- کارت‌ها و هدر پنل‌ها ---------- */
+.ads .cd>header h3{font-size:16px;font-weight:700}
+.ads .cd{box-shadow:0 1px 0 color-mix(in srgb,var(--tx) 5%,transparent) inset,0 10px 24px -16px color-mix(in srgb,var(--bg0) 90%,var(--c-black))}
+.ads .kp>*,.ads .row2>*,.ads .row3>*,.ads .top>*{min-width:0}
+.ads .k{display:grid;align-content:start;gap:2px}
+.ads .k small{margin-top:12px}
+.ads .k b{font-size:clamp(17px,1.4vw,22px);line-height:1.3;white-space:nowrap}
+.ads .k em{justify-self:start;margin-top:6px}
+
+/* ---------- فعالیت‌ها: رنگ معنادار برای هر نوع رویداد ---------- */
+.ads #act li{padding-block:2px}
+.ads .ai{background:color-mix(in srgb,var(--tone,var(--bl)) 18%,transparent);color:var(--tone,var(--bl));border:1px solid color-mix(in srgb,var(--tone,var(--bl)) 35%,transparent)}
+.ads .ai .ic{width:18px;height:18px}
+.ads #act time{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- جدول‌ها: پنل، سربرگ، ردیف ---------- */
+.ads .tablewrap{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:auto;-webkit-overflow-scrolling:touch}
+.ads .tablewrap table{min-width:100%}
+.ads .tablewrap th{font-size:12.5px;font-weight:600;white-space:nowrap;padding:12px 16px;background:color-mix(in srgb,var(--tx) 4%,transparent);position:sticky;top:0}
+.ads .tablewrap td{padding:12px 16px;transition:background-color .15s var(--ease-out)}
+.ads .tablewrap tr:last-child td{border-bottom:0}
+.ads .tablewrap td:empty::before{content:"—";color:var(--mut)}
+.ads .inv-filters,.ads .inv-toolbar{margin-bottom:14px}
+.ads .inv-stats .card{padding:14px 16px}
+
+/* ---------- تنظیمات: عرض خوانا، کنترل‌های درست ---------- */
+.ads #content>.cd:has(.lgo-box),.ads .ds-settings-card{max-width:720px;width:100%}
+.ads label:has(>input[type=range]){display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}
+.ads label>input[type=range]{flex:1 0 100%;margin-top:6px}
+.ads label>input[type=color]{width:72px;height:42px;justify-self:start;padding:3px;cursor:pointer}
+.ads label{color:var(--mut)}
+
+/* ---------- ورود تصویری: فقط یک لحظهٔ حرکتی، ورود داشبورد ---------- */
+@keyframes ads-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+  .ads .top .k,.ads .top .hero,.ads .row2>.cd,.ads .row3>.cd,.ads .qa>button{animation:ads-rise .5s var(--ease-out) both}
+  .ads .top .k:nth-child(2){animation-delay:40ms}.ads .top .k:nth-child(3){animation-delay:80ms}
+  .ads .top .k:nth-child(4){animation-delay:60ms}.ads .top .k:nth-child(5){animation-delay:100ms}.ads .top .k:nth-child(6){animation-delay:140ms}
+  .ads .top .hero{animation-delay:60ms}.ads .row2>.cd:nth-child(2){animation-delay:60ms}
+  .ads .row3>.cd{animation-delay:120ms}.ads .row3>.cd:nth-child(2){animation-delay:160ms}
+  .ads .qa>button{animation-delay:200ms}
+}
+@media(prefers-reduced-motion:reduce){.ads *{transition-duration:.01ms!important}}
+
+/* ---------- تبلت و موبایل ---------- */
+@media(max-width:1000px){
+  .ads{gap:10px 0;padding-inline:12px}
+  .ads .hd{gap:10px;min-height:64px}
+  .ads .brand b{font-size:14px}
+  .ads .kp{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .ads .top,.ads .row2,.ads .row3{gap:12px}
+  .ads .row2,.ads .row3{margin-top:12px}
+  .ads .qa{gap:12px;margin-top:12px}
+  /* منو: نوار قرص‌شکل افقی که به بالا می‌چسبد */
+  .ads .sb{position:sticky;top:0;z-index:20;padding:6px;border-radius:var(--r);max-height:none;overflow-y:visible;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(to left,var(--c-black) 0,var(--c-black) calc(100% - 22px),transparent);mask-image:linear-gradient(to left,var(--c-black) 0,var(--c-black) calc(100% - 22px),transparent);backdrop-filter:blur(14px);background:color-mix(in srgb,var(--card) 88%,transparent)}
+  .ads .sb nav{gap:4px}
+  .ads .nv{flex:none;width:auto;scroll-snap-align:center;padding:0 14px;min-height:42px}
+  .ads .nv.mn{padding:0 14px;min-height:42px;font-size:13.5px}
+  .ads .nv:not(.mn)+.nv.mn{margin-top:0;margin-inline-start:10px}
+  .ads .nv:not(.mn)+.nv.mn::before{inset-inline:auto;inset-inline-start:-8px;top:10px;bottom:10px;width:1px;height:auto}
+  /* هیرو: همان چینش، بدون فضای خالی و بدون موقعیت‌دهی مطلق */
+  .ads .hero{min-height:0;display:grid;gap:12px;padding:18px}
+  .ads .hero-t{position:static;max-width:none;top:auto;right:auto}
+  .ads .hsvg{display:block;position:static;width:100%;height:auto;max-height:150px;left:auto}
+  .ads .date{position:static;margin:0;justify-self:start}
+  .ads .mc{grid-template-columns:1fr}
+  .ads .lg{grid-template-columns:1fr 1fr}
+  .ads .lg button{grid-column:1/-1}
+  .ads #map{height:240px}
+  .ads .dn-w{flex-wrap:wrap}
+  .ads #content>h1{font-size:21px;margin-top:2px}
+}
+@media(max-width:560px){
+  .ads .k{padding:14px}
+  .ads .k b{font-size:clamp(16px,4.6vw,20px)}
+  .ads .qa{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ads .qa button:last-child:nth-child(odd){grid-column:1/-1}
+  .ads .tablewrap th,.ads .tablewrap td{padding:10px 12px}
+  .ads .prof>div{display:none}
+  .ads .cards,.ads .inv-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ads .tablewrap td{white-space:nowrap}
+  .ads .inv-filters>:is(input,label,select){flex:1 1 140px}
+}
+
+/* هیرو همیشه پس‌زمینهٔ تیره دارد؛ در تم روشن متن آن باید روشن بماند */
+:root[data-theme=light] .ads .hero{color:var(--c-d14f9016)}
+:root[data-theme=light] .ads .hero :is(.hero-t p,.date small){color:color-mix(in srgb,var(--c-d14f9016) 74%,transparent)}
+
+/* متن توضیحی صفحه‌ها (.mu / .muted) و دکمهٔ بالای صفحه: قبلاً فقط در invoice.css تعریف شده بودند و در برنامه بی‌استایل می‌ماندند */
+.ads .mu,.ads .muted{color:var(--mut);font-size:13px;line-height:1.9;margin:6px 0 14px}
+.ads .page-act{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 14px}

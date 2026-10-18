@@ -1,0 +1,19 @@
+/* منوی همبرگری موبایل/تبلت: همهٔ صفحه‌ها در یک کشوی عمودی (به‌جای نوار افقی که آیتم‌های آخر در آن گم می‌شد) */
+.ads .burger,.ads .nav-bk{display:none}
+@media(max-width:1000px){
+  .ads .burger{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--bd);background:var(--card);color:var(--tx);cursor:pointer;padding:0}
+  .ads .brand{width:auto;min-width:0;flex:1 1 auto}
+  .ads .brand small{display:none}
+  .ads .sb{position:fixed;inset-block:0;inset-inline-start:0;z-index:60;width:min(320px,86vw);height:100dvh;max-height:none;margin:0;padding:14px 12px 24px;border-radius:var(--r) 0 0 var(--r);flex-direction:column;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-mask-image:none;mask-image:none;scroll-snap-type:none;background:var(--card);backdrop-filter:none;box-shadow:0 0 40px rgba(0,0,0,.45);transform:translateX(110%);visibility:hidden;transition:transform .24s var(--ease-out,ease),visibility 0s linear .24s}
+  .ads.nav-open .sb{transform:none;visibility:visible;transition:transform .24s var(--ease-out,ease)}
+  .ads .sb nav{flex-direction:column;gap:2px;flex:1}
+  .ads .nv{width:100%;padding:0 14px;min-height:46px;font-size:15px}
+  .ads .nv.mn{min-height:46px;font-size:14.5px;margin:0;opacity:1}
+  .ads .nv:not(.mn)+.nv.mn{margin-top:12px;margin-inline-start:0}
+  .ads .nv:not(.mn)+.nv.mn::before{inset-inline:14px;inset-inline-start:14px;top:-7px;bottom:auto;width:auto;height:1px}
+  .ads .onl{display:flex}
+  .ads .nav-bk{display:block;position:fixed;inset:0;z-index:55;background:rgba(2,6,23,.55);opacity:0;pointer-events:none;transition:opacity .2s}
+  .ads.nav-open .nav-bk{opacity:1;pointer-events:auto}
+  body.nav-lock{overflow:hidden}
+}
+@media(prefers-reduced-motion:reduce){.ads .sb,.ads .nav-bk{transition:none}}

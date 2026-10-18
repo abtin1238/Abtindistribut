@@ -1,0 +1,18 @@
+[tool.ruff]
+line-length = 400
+target-version = "py312"
+
+[tool.ruff.lint]
+# syntax errors + undefined names only; the codebase is intentionally dense
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+follow_imports = "silent"
+check_untyped_defs = false
+warn_unused_ignores = false
+files = ["app/core", "app/services"]

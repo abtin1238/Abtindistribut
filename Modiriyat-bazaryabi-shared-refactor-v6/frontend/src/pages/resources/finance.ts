@@ -1,0 +1,19 @@
+import { send } from '../../lib/api'
+import type { Resource } from '../../lib/types'
+import { st, c, ref, T, N, D, S, O } from './helpers'
+
+export const financeResources: Resource[] = [
+  { path: 'payments', title: 'دریافت و پرداخت', endpoint: '/payments', columns: [c('created_at', 'تاریخ', 'date'), c('kind', 'نوع'), c('method', 'روش'), c('amount', 'مبلغ', 'money'), ref('customer_id', 'مشتری', '/customers'), ref('supplier_id', 'تأمین‌کننده', '/suppliers'), c('reference', 'مرجع')],
+    create: { title: 'ثبت پرداخت', fields: [O('kind', 'نوع', [['receipt', 'دریافت'], ['payment', 'پرداخت']], true, 'receipt'), S('customer_id', 'مشتری', '/customers'), S('supplier_id', 'تأمین‌کننده', '/suppliers'), N('invoice_id', 'شمارهٔ فاکتور'), N('amount', 'مبلغ', true), O('method', 'روش', [['cash', 'نقد'], ['bank', 'بانکی'], ['card', 'کارت']], true, 'cash'), S('bank_account_id', 'حساب بانکی', '/bank-accounts'), T('reference', 'مرجع')] } },
+  { path: 'checks', title: 'خزانه و چک', endpoint: '/checks', columns: [c('number', 'شماره'), c('kind', 'نوع'), c('amount', 'مبلغ', 'money'), c('due_date', 'سررسید', 'date'), st(), c('bank', 'بانک'), c('party', 'طرف حساب')],
+    create: { title: 'چک جدید', fields: [O('kind', 'نوع', [['received', 'دریافتی'], ['paid', 'پرداختی']], true, 'received'), T('number', 'شماره'), N('amount', 'مبلغ', true), D('due_date', 'سررسید', true), T('bank', 'بانک'), T('party', 'طرف حساب'), S('customer_id', 'مشتری', '/customers'), S('supplier_id', 'تأمین‌کننده', '/suppliers'), S('bank_account_id', 'حساب بانکی', '/bank-accounts'), S('chequebook_id', 'دسته‌چک', '/chequebooks')] },
+    actions: [{ label: 'تغییر وضعیت', fields: [O('status', 'وضعیت', [['deposited', 'ایداع'], ['cleared', 'وصول'], ['bounced', 'برگشت‌خورده'], ['cancelled', 'ابطال'], ['returned', 'مسترد']], true), S('bank_account_id', 'حساب بانکی', '/bank-accounts'), T('note', 'یادداشت')], run: (r, v) => send(`/checks/${r.id}`, v, 'PATCH') },
+      { label: 'خرج', when: r => r.kind === 'received' && r.status === 'pending', fields: [S('supplier_id', 'تأمین‌کننده', '/suppliers', true)], run: (r, v) => send(`/checks/${r.id}/endorse`, v) }] },
+  { path: 'journal', title: 'اسناد حسابداری', endpoint: '/journal', newTo: '/journal/new', perm: 'finance.read', columns: [c('number', 'شماره'), c('description', 'شرح'), c('debit', 'بدهکار', 'money'), c('credit', 'بستانکار', 'money'), st(), c('created_at', 'تاریخ', 'date')],
+    actions: [{ label: 'معکوس', danger: true, when: r => r.status === 'posted' && (!r.source_type || r.source_type === 'manual'), fields: [T('reason', 'دلیل')], run: (r, v) => send(`/journal/${r.id}/reverse?reason=${encodeURIComponent(String(v.reason ?? ''))}`) }] },
+  { path: 'accounts', title: 'کدینگ حساب‌ها', endpoint: '/accounts', columns: [c('code', 'کد'), c('name', 'نام'), c('type', 'نوع'), c('active', 'فعال', 'bool')],
+    create: { title: 'حساب جدید', fields: [T('code', 'کد (۳ تا ۱۰ رقم)', true), T('name', 'نام', true), O('type', 'نوع', [['asset', 'دارایی'], ['liability', 'بدهی'], ['equity', 'سرمایه'], ['revenue', 'درآمد'], ['expense', 'هزینه']], true)] } },
+  { path: 'fiscal', title: 'دوره‌های مالی', endpoint: '/fiscal/periods', columns: [c('name', 'نام'), c('start_date', 'شروع', 'date'), c('end_date', 'پایان', 'date'), c('closed', 'بسته', 'bool')],
+    create: { title: 'دورهٔ جدید', fields: [T('name', 'نام', true), D('start_date', 'شروع', true), D('end_date', 'پایان', true)] },
+    actions: [{ label: 'سند اختتامیه', when: r => !r.closed, confirm: 'درآمدها و هزینه‌های این دوره به حساب سود (زیان) انباشته بسته می‌شود. ادامه می‌دهید؟', run: r => send(`/fiscal/periods/${r.id}/closing-entry`) }, { label: 'بستن', danger: true, when: r => !r.closed, confirm: 'پس از بستن، ثبت سند در این دوره رد می‌شود.', run: r => send(`/fiscal/periods/${r.id}/close`) }, { label: 'بازگشایی', when: r => !!r.closed, run: r => send(`/fiscal/periods/${r.id}/reopen`) }] },
+]

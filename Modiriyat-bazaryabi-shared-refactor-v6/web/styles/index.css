@@ -1,0 +1,22 @@
+/* Single shared stylesheet entry point for the web app and mobile PWAs. */
+@import url("./primitives.css?v=19");
+@import url("./palette.css?v=19");
+@import url("./theme-tokens.css?v=19");
+@import url("./design-system.css?v=19");
+@import url("./theme.css?v=19");
+@import url("./controls.css?v=19");
+@import url("./invoices.css?v=19");
+@import url("./reports.css?v=19");
+@import url("./stage15.css?v=19");
+@import url("./uikit.css?v=19");
+@import url("./polish.css?v=20");
+@import url("./datatable.css?v=19");
+@import url("./responsive17.css?v=19");
+/* لایهٔ کامپوننت‌ها همیشه آخر لود می‌شود */
+@import url("./components/field.css?v=19");
+@import url("./components/tabs.css?v=19");
+@import url("./components/surface.css?v=19");
+@import url("./components/badge.css?v=19");
+@import url("./components/table.css?v=19");
+@import url("./adaptive.css?v=19");
+@import url("./mobile-nav.css?v=20");

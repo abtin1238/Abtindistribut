@@ -1,5 +1,0 @@
-/* کامپوننت: جدول داده. دکمهٔ مرتب‌سازی سرستون ظاهر دکمه ندارد (قبلاً قاب و پس‌زمینهٔ دکمه می‌گرفت). */
-.dt th>.dt-sort{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:4px;min-height:40px;color:inherit;font-weight:700;cursor:pointer}
-.dt th>.dt-sort:focus-visible{outline:2px solid var(--bl);outline-offset:2px}
-.tablewrap{max-width:100%;overflow-x:auto}
-#content>.cd+.cd{margin-top:16px}

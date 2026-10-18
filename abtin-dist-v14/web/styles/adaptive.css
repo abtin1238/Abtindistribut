@@ -1,0 +1,47 @@
+/* لایهٔ نهایی: چیدمان تطبیقی (UI نقش‌محور)، مقیاس z-index، اهداف لمسی.
+   وقتی نقشی به بخشی دسترسی ندارد، همان بخش از DOM حذف می‌شود؛ پس هر گرید باید با ۰ تا N فرزند درست بچیند.
+   فقط از توکن‌ها استفاده می‌کند و هیچ رنگ literal ندارد. */
+
+/* ---------- مقیاس z-index (یک منبع؛ بدون عدد پراکنده) ---------- */
+:root{--z-sticky:20;--z-dropdown:30;--z-modal:1000;--z-toast:2000}
+.ads .sb{z-index:var(--z-sticky)}
+.dt-colbox{z-index:var(--z-dropdown)}
+.ds-modal,.fd-back{z-index:var(--z-modal)}
+.toast-host{z-index:var(--z-toast)}
+/* نقشه لایه‌های داخلی خودش (تا ۱۰۰۰) را داخل خودش نگه می‌دارد و روی مودال نمی‌آید */
+.leaflet-container{isolation:isolate}
+
+/* ---------- داشبورد: گریدهای تطبیقی ---------- */
+.ads .top{grid-template-columns:minmax(0,1fr)}
+@media(min-width:1100px){.ads .top:has(>.kp):has(>.hero){grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}}
+.ads :is(.top,.row2,.row3)>:only-child{grid-column:1/-1}
+.ads .kp{grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));align-content:start}
+.ads .kp:has(>:nth-child(4)){align-content:stretch}
+.ads .top>.kp:only-child{grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+.ads .qa{grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+/* عدد کارت شاخص با عرض خود کارت مقیاس می‌گیرد (بدون سرریز) */
+.ads .k{container-type:inline-size}
+.ads .k b{font-size:clamp(14px,9cqi,22px)}
+/* هیرو: چیدمان مطلق فقط وقتی عرض کافی است؛ وگرنه ستونی (بر پایهٔ عرض خود هیرو، نه صفحه) */
+.ads .hero{display:grid;align-content:start;container-type:inline-size}
+@container (max-width:620px){
+  .hero-t{position:static;max-width:none}
+  .hsvg{position:static;display:block;width:100%;height:auto;max-height:150px}
+  .date{position:static;margin:0;justify-self:start}
+}
+.ads .hero-t,.ads .date{z-index:1}
+
+/* ---------- نوار منوی کنار: با هر تعداد آیتم ---------- */
+.ads .sb nav{min-width:0}
+.ads .nv span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- جدول‌ها و کارت‌های داخلی هیچ‌وقت صفحه را عریض نمی‌کنند ---------- */
+.ads #content>*{min-width:0;max-width:100%}
+.ads .cd>header{flex-wrap:wrap;gap:8px}
+.ads .cd select{max-width:100%}
+
+/* ---------- اهداف لمسی حداقل ۳۶px ---------- */
+.ds-link{display:inline-flex;align-items:center;min-height:36px}
+button.ghost,.inv-actions button,.inv-toolbar button,.inv-modal-foot button{min-height:36px}
+input[type=range]{height:max(var(--ctl-thumb),28px)}
+@media(pointer:coarse){button.ghost,.inv-actions button,.inv-toolbar button,.inv-modal-foot button,.dt button,.ds-link{min-height:44px}}

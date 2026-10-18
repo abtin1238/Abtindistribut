@@ -1,0 +1,6 @@
+/* کامپوننت: تب/دکمهٔ زیرمنو (حساب بانکی، اتوماسیون فروش). افقی و قابل‌اسکرول، بدون شکستن چیدمان. */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
+.nav-item{display:inline-flex;align-items:center;gap:6px;flex:none;min-height:var(--ctl-h,42px);padding:0 16px;border:1px solid var(--bd);border-radius:var(--r-sm);background:var(--ctl-bg);color:var(--mut);font:inherit;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.nav-item:hover{border-color:var(--ctl-border-hover,var(--bl));color:var(--tx)}
+.nav-item:focus-visible{outline:0;box-shadow:var(--ctl-ring)}
+.nav-item.is-active{background:var(--btn);border-color:transparent;color:var(--c-white)}

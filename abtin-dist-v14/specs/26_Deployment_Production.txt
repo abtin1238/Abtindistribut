@@ -1,0 +1,13 @@
+پرامپت انتشار Production
+
+آماده سازی:
+
+- تنظیم سرور
+- Database Production
+- Environment Variables
+- Backup
+- Logging
+- Monitoring
+- امنیت سرور
+
+سیستم بدون خطا Deploy شود.

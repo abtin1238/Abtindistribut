@@ -1,0 +1,3 @@
+/* Invoice page: shared design system plus invoice-specific components. */
+@import url("./core.css?v=19");
+@import url("./invoice.css");

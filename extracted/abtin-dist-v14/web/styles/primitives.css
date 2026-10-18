@@ -1,0 +1,3 @@
+/* Shared low-level primitives for web and mobile. Keep page/component styling in their own files. */
+*,*::before,*::after{box-sizing:border-box}
+input,select,button,textarea{font:inherit}

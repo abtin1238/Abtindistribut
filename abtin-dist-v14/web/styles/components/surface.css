@@ -1,0 +1,5 @@
+/* کامپوننت: سطح‌های روی‌هم (توست، پنل ستون‌ها، dialog). --card شفاف است (rgba)، پس این‌ها پس‌زمینهٔ مات می‌گیرند تا متن زیرشان دیده نشود. */
+:root{--surface-solid:color-mix(in srgb,var(--tx) 8%,var(--bg0))}
+.toast,.dt-colbox,.fd,dialog{background-color:var(--surface-solid);background-image:none}
+.toast-host{inset-block-start:max(16px,env(safe-area-inset-top))}
+.scroll-box{max-height:220px;overflow:auto}

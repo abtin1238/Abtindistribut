@@ -1,0 +1,17 @@
+# VPS without Docker: copy to /etc/systemd/system/, then
+#   sudo systemctl daemon-reload && sudo systemctl enable --now abtinmaps-bot
+[Unit]
+Description=Abtin Maps Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=bot
+WorkingDirectory=/opt/abtinmaps-bot
+EnvironmentFile=/opt/abtinmaps-bot/.env
+ExecStart=/opt/abtinmaps-bot/.venv/bin/python bot.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
